@@ -1,0 +1,60 @@
+{
+    "name": "Modern Software Dev Assignments",
+    "dockerFile": "../Dockerfile",
+    "context": "..",
+    
+    // Configure tool-specific properties
+    "customizations": {
+        "vscode": {
+            // Extensions to install
+            "extensions": [
+                "ms-python.python",
+                "ms-python.black-formatter",
+                "charliermarsh.ruff",
+                "ms-python.pylint",
+                "ms-python.debugpy",
+                "bradlc.vscode-tailwindcss",
+                "esbenp.prettier-vscode",
+                "ms-vscode.vscode-json",
+                "redhat.vscode-yaml"
+            ],
+            
+            // VS Code settings
+            "settings": {
+                "python.defaultInterpreterPath": "/app/.venv/bin/python",
+                "python.formatting.provider": "black",
+                "python.formatting.blackArgs": ["--line-length=100"],
+                "python.linting.enabled": true,
+                "python.linting.ruffEnabled": true,
+                "python.linting.pylintEnabled": false,
+                "editor.formatOnSave": true,
+                "editor.codeActionsOnSave": {
+                    "source.organizeImports": "explicit"
+                },
+                "files.exclude": {
+                    "**/__pycache__": true,
+                    "**/.pytest_cache": true,
+                    "**/node_modules": true
+                }
+            }
+        }
+    },
+    
+    // Forward ports
+    "forwardPorts": [8000],
+    "portsAttributes": {
+        "8000": {
+            "label": "FastAPI App",
+            "onAutoForward": "notify"
+        }
+    },
+    
+    // Use 'postCreateCommand' to run commands after the container is created
+    "postCreateCommand": "poetry install && echo 'Environment ready! For Week 1 (Ollama): Install Ollama locally on your host machine. For Weeks 2,4-7: See terminal for run commands.'",
+    
+    // Use 'postStartCommand' to run commands after the container starts  
+    "postStartCommand": "echo '\n🚀 Development Environment Ready!\n\n📁 Week 1: cd week1 && python <technique_file>.py\n📁 Week 2: cd week2 && poetry run uvicorn app.main:app --reload\n📁 Week 4+: cd week4 && make run\n\n📖 See README.md for detailed instructions\n'",
+    
+    // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+    "remoteUser": "root"
+}
