@@ -20,9 +20,15 @@
                 "[python]": {
                     "editor.defaultFormatter": "ms-python.black-formatter",
                     "editor.formatOnSave": true
-                }
+                },
+                "git.enabled": true,
+                "git.path": "/usr/bin/git"
             }
         }
+    },
+    
+    "containerEnv": {
+        "GIT_EDITOR": "code --wait"
     },
     
     "forwardPorts": [8000],
@@ -32,7 +38,7 @@
         }
     },
     
-    "postCreateCommand": "poetry install",
+    "postCreateCommand": "poetry install && git --version && git config --global --add safe.directory /app && git config --global init.defaultBranch main",
     "postStartCommand": "echo 'Environment ready! Use terminal to navigate to week folders and run applications.'",
     
     "remoteUser": "root"
